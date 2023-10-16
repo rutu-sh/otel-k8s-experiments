@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: single-app-single-collector
+  labels:
+    app: single-app-single-collector
+  namespace: opentelemetry
+spec:
+  type: NodePort
+  selector:
+    app: single-app-single-collector
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+  labels:
+    app: otel-collector
+  namespace: opentelemetry
+spec:
+  type: ClusterIP
+  selector:
+    app: otel-collector
+  ports:
+    - name: otel-grpc
+      protocol: TCP
+      port: 4317
+      targetPort: 4317
+    - name: otel-http
+      protocol: TCP
+      port: 4318
+      targetPort: 4318

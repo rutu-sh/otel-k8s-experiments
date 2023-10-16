@@ -20,14 +20,14 @@
 
 ## create a three node cluster
 ---
-- [ ] run the following command and copy its logs to a file
+- [ ] run the following command and copy its logs to a file (number of nodes are optional, you can create a single node cluster as well)
 ```shell
-minikube start --nodes 3 -p k8s-learning
+minikube start --nodes 3 -p otel-learning
 ```
 
 - [ ] set the minikube profile
 ```shell
-minikube profile k8s-learning
+minikube profile otel-learning
 ```
 
 <mark style="background: #FF5582A6;">NOTE: just doing `minikube stop` will not stop all the clusters. For a proper cleanup always run `minikube delete -all` </mark>
