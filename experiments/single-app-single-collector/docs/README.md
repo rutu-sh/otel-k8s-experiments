@@ -1,4 +1,7 @@
 # Single App Single Collector Experiment
+
+![High Level Overview](./assets/high-level-architecture.drawio.png)
+
 This experiment demonstrates a simple setup with a single application and a single collector. The application is a simple stateful Python FastAPI application which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs. 
 
 
@@ -13,13 +16,6 @@ This experiment demonstrates a simple setup with a single application and a sing
 ![Collector Telemetry](./assets/collector-logs.png)
 
 ***figure-3: Collector Telemetry***
-
-## Prerequisites
-In order to run this experiment, you need to have the following installed:
-
-- [Docker](https://docs.docker.com/get-docker/)
-
-- [MiniKube](https://minikube.sigs.k8s.io/docs)
 
 
 ## Architecture
@@ -82,6 +78,14 @@ The configuration consists of the following main components:
 ***figure 6: OpenTelemetry Collector Pipeline***
 
 We define a simple pipeline in the collector which receives telemetry data from the application, processes it, and displays it as logs.
+
+
+## Prerequisites
+In order to run this experiment, you need to have the following installed:
+
+- [Docker](https://docs.docker.com/get-docker/)
+
+- [MiniKube](https://minikube.sigs.k8s.io/docs)
 
 
 ## Setup
