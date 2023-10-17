@@ -1,29 +1,48 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: otel-collector
-#   labels:
-#     app: otel-collector
-#   namespace: opentelemetry
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: otel-collector
-#   template:
-#     metadata:
-#       labels:
-#         app: otel-collector
-#     spec:
-#       containers:
-#       - name: otel-collector
-#         imagePullPolicy: Always
-#         image: otel/opentelemetry-collector:0.33.0
-#         ports:
-#           - containerPort: 4317
-#         envFrom:
-#           - configMapRef:
-#               name: single-app-single-collector
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opentelemetry-collector
+  labels:
+    app: opentelemetry-collector
+  namespace: opentelemetry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opentelemetry-collector
+  template:
+    metadata:
+      labels:
+        app: opentelemetry-collector
+    spec:
+      containers:
+      - name: opentelemetry-collector
+        imagePullPolicy: Always
+        image: otel/opentelemetry-collector:0.33.0
+        command:
+          - "/otelcol"
+          - "--config=/conf/otel-collector-config.yaml"
+        ports:
+          - containerPort: 4317
+          - containerPort: 4318
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+        volumeMounts:
+          - name: otel-collector-config-vol
+            mountPath: /conf
+      volumes:
+        - name: otel-collector-config-vol
+          configMap:
+            name: otel-collector-config
+            items:
+            - key: otel-collector-config.yaml
+              path: otel-collector-config.yaml
+
 
 ---
 
@@ -53,3 +72,10 @@ spec:
         envFrom:
           - configMapRef:
               name: single-app-single-collector
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "0.5"
+          requests:
+            memory: "1Gi"
+            cpu: "0.5"

@@ -22,18 +22,19 @@ kind: Service
 metadata:
   name: otel-collector
   labels:
-    app: otel-collector
+    app: opentelemetry-collector
   namespace: opentelemetry
 spec:
   type: ClusterIP
   selector:
-    app: otel-collector
+    app: opentelemetry-collector
   ports:
     - name: otel-grpc
       protocol: TCP
       port: 4317
       targetPort: 4317
-    - name: otel-http
+    - name: nginx-test
       protocol: TCP
-      port: 4318
-      targetPort: 4318
+      port: 80
+      targetPort: 80
+      
