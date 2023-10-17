@@ -4,10 +4,15 @@ This experiment demonstrates a simple setup with a single application and a sing
 
 ![k8s Dashboard](./assets/k8s-dashboard.png)
 
+***figure-1: Kubernetes Dashboard with the deployed workloads***
+
 ![Application Telemetry](./assets/application-telemetry.png)
+
+***figure-2: Application Telemetry***
 
 ![Collector Telemetry](./assets/collector-logs.png)
 
+***figure-3: Collector Telemetry***
 
 ## Prerequisites
 In order to run this experiment, you need to have the following installed:
@@ -97,7 +102,7 @@ On a very high level the architecture can be simplified as follows:
 
 ![High Level Overview](./assets/high-level-architecture.drawio.png)
 
-*figure 1: High Level Overview*
+***figure 4: High Level Overview of the Kubernetes Cluster***
 
 The application is a simple Python FastAPI application which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs.
 
@@ -107,7 +112,7 @@ The application is a simple Python FastAPI application which is auto-instrumente
 
 ![Architecture](./assets/architecture.drawio.png)
 
-*figure 2: Detailed Architecture*
+***figure 5: Detailed Architecture***
 
 
 The configuration consists of the following main components:
@@ -144,6 +149,8 @@ The configuration consists of the following main components:
 ## Telemetry data processing in OpenTelemetry Collector
 
 ![Otel Pipeline](./assets/otel-pipeline.drawio.png)
+
+***figure 6: OpenTelemetry Collector Pipeline***
 
 
 ## Understanding the YAML configurations
@@ -382,13 +389,13 @@ resources:
   - deployment.yaml
 ```
 
-When this file is configured in our folder, we can use the inbuild kustomization functionality of kubectl to deploy the resources.
+When this file is configured in our folder, we can use the inbuilt kustomization functionality of kubectl to deploy the resources.
 
 ```shell
 kubectl apply -k .
 ```
 
-Similarly, we can use the inbuild kustomization functionality of kubectl to destroy the resources.
+Similarly, we can use the inbuilt kustomization functionality of kubectl to destroy the resources.
 
 ```shell
 kubectl delete -k .
