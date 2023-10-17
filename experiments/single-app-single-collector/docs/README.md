@@ -3,7 +3,10 @@ This experiment demonstrates a simple setup with a single application and a sing
 
 
 ## Prerequisites
+In order to run this experiment, you need to have the following installed:
+
 - [Docker](https://docs.docker.com/get-docker/)
+
 - [MiniKube](https://minikube.sigs.k8s.io/docs)
 
 
@@ -23,14 +26,29 @@ minikube profile otel-learning
 
 ### Deploy
 
-To deploy, cd into the k8s directory and run the following command to deploy the setup.
+To deploy, cd into the `k8s` directory and run the following command to deploy the setup.
 
 ```shell
 make deploy
 ```
 
+### Get the application URL
+
+```shell
+minikube service --namespace opentelemetry-demo single-app-single-collector --url
+```
+
+### Check Collector Logs
+
+To display the collector logs, run the following command:
+
+```shell
+kubectl logs --namespace opentelemetry-demo -l app=opentelemetry-collector --tail 100
+```
+
+
 ### Destroy
-To destroy, cd into the k8s directory and run the following command to destroy the setup.
+To destroy, cd into the `k8s` directory and run the following command to destroy the setup.
 
 ```shell
 make destroy
