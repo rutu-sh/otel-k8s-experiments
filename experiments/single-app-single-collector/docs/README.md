@@ -1,6 +1,7 @@
 # Single App Single Collector Experiment
 This experiment demonstrates a simple setup with a single application and a single collector. The application is a simple stateful Python FastAPI application which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs. 
 
+
 ![Demo](./assets/single-app-single-collector-demo.gif)
 
 
@@ -55,6 +56,35 @@ To destroy, cd into the `k8s` directory and run the following command to destroy
 ```shell
 make destroy
 ```
+
+## View in K8s Dashboard
+
+To view the application in the Kubernetes dashboard, run the following commands:
+
+Switch to the otel-learning minikube profile
+
+```shell
+minikube profile otel-learning
+```
+
+Enable the dashboard and metrics server addons
+
+```shell
+minikube addons enable dashboard
+```
+
+```shell
+minikube addons enable metrics-server
+```
+
+Start the dashboard
+
+```shell
+minikube dashboard
+```
+
+![K8s Dashboard](./assets/single-app-single-collector-k8s-dashboard.gif)
+
 
 ## Architecture
 
