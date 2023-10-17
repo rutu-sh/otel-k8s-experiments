@@ -24,7 +24,6 @@ spec:
           - "--config=/conf/otel-collector-config.yaml"
         ports:
           - containerPort: 4317
-          - containerPort: 4318
         resources:
           limits:
             memory: "2Gi"
@@ -45,6 +44,7 @@ spec:
 
 
 ---
+
 
 apiVersion: apps/v1
 kind: Deployment
