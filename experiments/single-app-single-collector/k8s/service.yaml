@@ -33,8 +33,5 @@ spec:
       protocol: TCP
       port: 4317
       targetPort: 4317
-    - name: nginx-test
-      protocol: TCP
-      port: 80
-      targetPort: 80
+
       
