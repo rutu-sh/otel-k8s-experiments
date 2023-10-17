@@ -2,7 +2,11 @@
 This experiment demonstrates a simple setup with a single application and a single collector. The application is a simple stateful Python FastAPI application which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs. 
 
 
-![Demo](./assets/single-app-single-collector-demo.gif)
+![k8s Dashboard](./assets/k8s-dashboard.png)
+
+![Application Telemetry](./assets/application-telemetry.png)
+
+![Collector Telemetry](./assets/collector-logs.png)
 
 
 ## Prerequisites
@@ -82,8 +86,6 @@ Start the dashboard
 ```shell
 minikube dashboard
 ```
-
-![K8s Dashboard](./assets/single-app-single-collector-k8s-dashboard.gif)
 
 
 ## Architecture
