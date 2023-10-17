@@ -128,3 +128,347 @@ The configuration consists of the following main components:
 
 8. **otel-collector ConfigMap**: The ConfigMap containing the configuration for the collector. This ConfigMap is generated using kustomize and the `otel-collector-config.yaml` file stored in the `data` folder.
 
+### Flow
+
+1. The user interacts with the application using the `single-app-single-collector NodePort Service` on port `30000`.
+
+2. The service forwards the request to the application container on port `8000`.
+
+3. The application container processes the request and generates telemetry data (traces, metrics, and logs).
+
+4. The application container sends the telemetry data to the collector using the `otel-collector ClusterIP Service` on port `4317`.
+
+5. The collector receives the telemetry data and displays it as logs.
+
+
+## Telemetry data processing in OpenTelemetry Collector
+
+![Otel Pipeline](./assets/otel-pipeline.drawio.png)
+
+
+## Understanding the YAML configurations
+
+### k8s/namespace.yaml
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: opentelemetry-demo
+  labels:
+    name: opentelemetry
+```
+
+This YAML file creates a namespace called `opentelemetry-demo` with the label `name: opentelemetry`.
+
+
+### k8s/service.yaml
+
+This yaml creates two services:
+
+**1. single-app-single-collector NodePort Service**
+
+This is a NodePort service which exposes the application to the host machine. This service will provide an interface to the user to interact with the application.
+
+
+The service is exposed on port `8000` and the target port, which specifies the port on the pod, is `8000`. The service is exposed on the host machine on port `30000`.
+
+This services uses the selector `app: single-app-single-collector` to select the pods to expose.
+
+```yaml
+spec:
+  type: NodePort
+  selector:
+    app: single-app-single-collector
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30000
+```
+
+**2. otel-collector ClusterIP Service**
+
+This is a ClusterIP service which exposes the collector to the application. The application will send telemetry data to the collector using this service.
+
+The service is exposed on port `4317` and the target port, which specifies the port on the pod, is `4317`.
+
+This services uses the selector `app: opentelemetry-collector` to select the pods to expose.
+
+
+```yaml
+spec:
+  type: ClusterIP
+  selector:
+    app: opentelemetry-collector
+  ports:
+    - name: otel-grpc
+      protocol: TCP
+      port: 4317
+      targetPort: 4317
+```
+
+### k8s/deployment.yaml
+
+This yaml creates two deployments:
+
+**1. single-app-single-collector Deployment**
+
+This is used to deploy the application. It uses the `rutush10/otel-autoinstrumentation-fastapi-simple-app` image which defines a simple FastAPI application listening on port 8000. The application is auto-instrumented using the OpenTelemetry Python SDK, and emits traces, logs, and metrics. Based on the environment variables provided, it can export telemetry data to the console or to the collector.
+
+The deployment uses the selector `app: single-app-single-collector` to manage the replica set and pods. The replica set is configured to have only one replica.
+
+```yaml
+  replicas: 1
+  selector:
+    matchLabels:
+      app: single-app-single-collector
+```
+
+The pod has label `app: single-app-single-collector`, allowing it to be managed by the deployment's replica set.
+
+```yaml
+  template:
+    metadata:
+      labels:
+        app: single-app-single-collector
+```
+
+The pod has only one container, which is the application container. The container uses the `rutush10/otel-autoinstrumentation-fastapi-simple-app` image. The container exposes port `8000` and references the `single-app-single-collector ConfigMap` for the environment variables. The resource limits are set to `1Gi` for memory and `0.5` for CPU, and the resource requests are set to `1Gi` for memory and `0.5` for CPU.
+
+
+```yaml
+    spec:
+      containers:
+      - name: single-app-single-collector
+        imagePullPolicy: Always
+        image: rutush10/otel-autoinstrumentation-fastapi-simple-app:0.0.4
+        ports:
+          - containerPort: 8000
+        envFrom:
+          - configMapRef:
+              name: single-app-single-collector
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "0.5"
+          requests:
+            memory: "1Gi"
+            cpu: "0.5"
+```
+
+With this deployment definition, the application container will be exposed to the service `single-app-single-collector NodePort Service` on port `8000` (because it has the label `app: single-app-single-collector`).
+
+
+**2. otel-collector Deployment**
+
+This is used to deploy the collector. It uses the `otel/opentelemetry-collector` image which defines the OpenTelemetry Collector. The collector is configured to receive telemetry data from the application and display it as logs, the configuration is provided by mounting the `otel-collector-config.yaml` via the `otel-collector ConfigMap`.
+
+The deployment uses the selector `app: opentelemetry-collector` to manage the replica set and pods. The replica set is configured to have only one replica.
+
+```yaml
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opentelemetry-collector
+```
+
+
+The pod has label `app: opentelemetry-collector`, allowing it to be managed by the deployment's replica set. This label is used by the `otel-collector ClusterIP Service` to select the pods to expose.
+
+```yaml
+  template:
+    metadata:
+      labels:
+        app: opentelemetry-collector
+```
+
+The pod has only one container, which is the collector container. The container uses the `otel/opentelemetry-collector` image. The container exposes port `4317` and references the `otel-collector ConfigMap` for the configuration.
+
+
+The resource limits are set to `1Gi` for memory and `0.5` for CPU, and the resource requests are set to `1Gi` for memory and `0.5` for CPU.
+
+```yaml
+    spec:
+      containers:
+      - name: opentelemetry-collector
+        imagePullPolicy: Always
+        image: otel/opentelemetry-collector:0.33.0
+        command:
+          - "/otelcol"
+          - "--config=/conf/otel-collector-config.yaml"
+        ports:
+          - containerPort: 4317
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+        volumeMounts:
+          - name: otel-collector-config-vol
+            mountPath: /conf
+      volumes:
+        - name: otel-collector-config-vol
+          configMap:
+            name: otel-collector-config
+            items:
+            - key: otel-collector-config.yaml
+              path: otel-collector-config.yaml
+```
+
+
+With this deployment definition, the collector container will be exposed to the service `otel-collector ClusterIP Service` on port `4317` (because it has the label `app: opentelemetry-collector`).
+
+
+### k8s/configmap.yaml
+
+This yaml creates the `single-app-single-collector ConfigMap` which contains the environment variables for the application.
+
+```yaml
+data:
+  OTEL_SERVICE_NAME: "single-app-single-collector-fastapi-app"
+  OTEL_TRACES_EXPORTER: "console,otlp"
+  OTEL_METRICS_EXPORTER: "console,otlp"
+  OTEL_LOGS_EXPORTER: "console,otlp"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector:4317"
+  OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
+```
+
+The `OTEL_SERVICE_NAME` environment variable specifies the service name for identifying the applications telemetry data.
+
+The `OTEL_TRACES_EXPORTER` environment variable specifies the exporters to which the application should export traces. In this case, the application will export traces to the console and to the collector. Same goes for `OTEL_METRICS_EXPORTER` and `OTEL_LOGS_EXPORTER`.
+
+The `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable specifies the endpoint to which the application should export telemetry data. In this case, the application will export telemetry data to the collector. As the collector is running within the cluster, and is exposed via the `otel-collector` ClusterIP service, the application can access the collector using the hostname `otel-collector`. Keep in mind to keep the protocol as `http` and not `https`. The collector is not configured to use TLS.
+
+
+The `OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED` environment variable enables auto-instrumentation for the application logs. 
+
+This ConfigMap is referenced by the `single-app-single-collector Deployment` by using the `envFrom` field.
+
+```yaml
+        envFrom:
+          - configMapRef:
+              name: single-app-single-collector
+```
+
+
+### k8s/kustomization.yaml
+
+This is the kustomization file which is used to generate the `otel-collector ConfigMap` using the `otel-collector-config.yaml` file stored in the `data` folder.
+
+```yaml
+generatorOptions:
+      disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: otel-collector-config
+    namespace: opentelemetry-demo
+    options:
+      labels:
+        app: otel-collector
+    files:
+      - otel-collector-config.yaml=data/otel-collector-config.yaml
+```
+
+This file also defines the yaml files for deploying the resources.
+
+```yaml
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - service.yaml
+  - deployment.yaml
+```
+
+When this file is configured in our folder, we can use the inbuild kustomization functionality of kubectl to deploy the resources.
+
+```shell
+kubectl apply -k .
+```
+
+Similarly, we can use the inbuild kustomization functionality of kubectl to destroy the resources.
+
+```shell
+kubectl delete -k .
+```
+
+### k8s/data/otel-collector-config.yaml
+
+This yaml file contains the configuration for the collector. It defines the following components:
+
+**receivers**
+
+The receivers are the components which receive telemetry data from the application.
+
+In this case we define an `otlp` receiver, which receives the telemetry data from the application via `grpc`. By default, a `grpc` receiver listens on port `4317`.
+
+
+```yaml
+receivers:
+  otlp:
+    protocols:
+      grpc:
+```
+
+**processors**
+
+The processors are the components which process the telemetry data received by the receivers.
+
+In this case we define a `batch` processor, which batches the telemetry data received by the `otlp` receiver. 
+
+```yaml
+processors:
+  batch:
+```
+
+**exporters**
+
+The exporters are the components which export the telemetry data processed by the processors.
+
+In this case we define a `logging` exporter, which displays the telemetry data as logs.
+
+```yaml
+exporters:
+  logging:
+    loglevel: debug
+```
+
+
+**service**
+
+The service section is used to configure what components are enabled in the collector. It defines the following components:
+- pipelines : defines the flow of telemetry data through receivers, processors, and exporters.
+- extensions : defines the extensions used by the collector.
+- telemetry : defines the telemetry components used by the collector.
+
+In this case we define 3 pipelines:
+
+1. **traces**: This pipeline receives traces from the `otlp` receiver, processes them using the `batch` processor, and exports them using the `logging` exporter.
+
+```yaml
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+```
+
+2. **metrics**: This pipeline receives metrics from the `otlp` receiver, processes them using the `batch` processor, and exports them using the `logging` exporter.
+
+```yaml
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+```
+
+3. **logs**: This pipeline receives logs from the `otlp` receiver, processes them using the `batch` processor, and exports them using the `logging` exporter.
+
+```yaml
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+```
+
