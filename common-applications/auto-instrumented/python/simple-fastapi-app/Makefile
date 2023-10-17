@@ -22,7 +22,19 @@ build-app: build-docker-context
 
 run-app:
 	@echo "Running app"
-	docker run --rm --name ${APP_IMAGE_NAME} -p 8000:8000 ${APP_IMAGE_NAME}:$(TAG)
+	docker run --rm --name ${APP_IMAGE_NAME} \
+		-e OTEL_SERVICE_NAME=single-app-single-collector-fastapi-app \
+		-e OTEL_LOGS_EXPORTER=console \
+		-e OTEL_TRACES_EXPORTER=console \
+		-e OTEL_METRICS_EXPORTER=console \
+		-e OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true \
+		-p 8000:8000 \
+		${APP_IMAGE_NAME}:$(TAG)
+
+
+stop-app:
+	@echo "Stopping app"
+	docker stop ${APP_IMAGE_NAME}
 
 
 publish: build-app

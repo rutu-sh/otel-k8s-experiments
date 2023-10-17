@@ -66,7 +66,7 @@ spec:
       containers:
       - name: single-app-single-collector
         imagePullPolicy: Always
-        image: rutush10/otel-autoinstrumentation-fastapi-simple-app:0.0.3
+        image: rutush10/otel-autoinstrumentation-fastapi-simple-app:0.0.4
         ports:
           - containerPort: 8000
         envFrom:

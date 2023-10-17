@@ -10,4 +10,5 @@ data:
   OTEL_TRACES_EXPORTER: "console,otlp"
   OTEL_METRICS_EXPORTER: "console,otlp"
   OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector:4317"
-
+  OTEL_LOGS_EXPORTER: "console,otlp"
+  OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
