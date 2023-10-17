@@ -22,6 +22,68 @@ In order to run this experiment, you need to have the following installed:
 - [MiniKube](https://minikube.sigs.k8s.io/docs)
 
 
+## Architecture
+
+
+### High Level Overview
+
+On a very high level the architecture can be simplified as follows:
+
+![High Level Overview](./assets/high-level-architecture.drawio.png)
+
+***figure 4: High Level Overview of the Kubernetes Cluster***
+
+The application is a simple Python FastAPI application which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs.
+
+
+
+### Detailed Architecture
+
+![Architecture](./assets/architecture.drawio.png)
+
+***figure 5: Detailed Architecture***
+
+
+The configuration consists of the following main components:
+
+1. **Minikube Cluster**: A single node Kubernetes cluster created using Minikube.
+
+2. **opentelemetry-demo Namespace**: A namespace created in the Minikube cluster to deploy the application and the collector.
+
+3. **single-app-single-collector NodePort Service**: A NodePort service created in the opentelemetry-demo namespace to expose the application to the host machine.
+
+4. **otel-collector ClusterIP Service**: A ClusterIP service created in the opentelemetry-demo namespace to expose the collector to the application.
+
+5. **single-app-single-collector Deployment**: A deployment created in the opentelemetry-demo namespace to deploy the application.
+
+6. **otel-collector Deployment**: A deployment created in the opentelemetry-demo namespace to deploy the opentelemetry collector.
+
+7. **single-app-single-collector ConfigMap**: The ConfigMap containing the environment variables for the application.
+
+8. **otel-collector ConfigMap**: The ConfigMap containing the configuration for the collector. This ConfigMap is generated using kustomize and the `otel-collector-config.yaml` file stored in the `data` folder.
+
+### Flow
+
+1. The user interacts with the application using the `single-app-single-collector NodePort Service` on port `30000`.
+
+2. The service forwards the request to the application container on port `8000`.
+
+3. The application container processes the request and generates telemetry data (traces, metrics, and logs).
+
+4. The application container sends the telemetry data to the collector using the `otel-collector ClusterIP Service` on port `4317`.
+
+5. The collector receives the telemetry data and displays it as logs.
+
+
+## Telemetry data processing in OpenTelemetry Collector
+
+![Otel Pipeline](./assets/otel-pipeline.drawio.png)
+
+***figure 6: OpenTelemetry Collector Pipeline***
+
+We define a simple pipeline in the collector which receives telemetry data from the application, processes it, and displays it as logs.
+
+
 ## Setup
 
 ### Start a single node cluster using Minikube
@@ -92,65 +154,6 @@ Start the dashboard
 minikube dashboard
 ```
 
-
-## Architecture
-
-
-### High Level Overview
-
-On a very high level the architecture can be simplified as follows:
-
-![High Level Overview](./assets/high-level-architecture.drawio.png)
-
-***figure 4: High Level Overview of the Kubernetes Cluster***
-
-The application is a simple Python FastAPI application which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs.
-
-
-
-### Detailed Architecture
-
-![Architecture](./assets/architecture.drawio.png)
-
-***figure 5: Detailed Architecture***
-
-
-The configuration consists of the following main components:
-
-1. **Minikube Cluster**: A single node Kubernetes cluster created using Minikube.
-
-2. **opentelemetry-demo Namespace**: A namespace created in the Minikube cluster to deploy the application and the collector.
-
-3. **single-app-single-collector NodePort Service**: A NodePort service created in the opentelemetry-demo namespace to expose the application to the host machine.
-
-4. **otel-collector ClusterIP Service**: A ClusterIP service created in the opentelemetry-demo namespace to expose the collector to the application.
-
-5. **single-app-single-collector Deployment**: A deployment created in the opentelemetry-demo namespace to deploy the application.
-
-6. **otel-collector Deployment**: A deployment created in the opentelemetry-demo namespace to deploy the opentelemetry collector.
-
-7. **single-app-single-collector ConfigMap**: The ConfigMap containing the environment variables for the application.
-
-8. **otel-collector ConfigMap**: The ConfigMap containing the configuration for the collector. This ConfigMap is generated using kustomize and the `otel-collector-config.yaml` file stored in the `data` folder.
-
-### Flow
-
-1. The user interacts with the application using the `single-app-single-collector NodePort Service` on port `30000`.
-
-2. The service forwards the request to the application container on port `8000`.
-
-3. The application container processes the request and generates telemetry data (traces, metrics, and logs).
-
-4. The application container sends the telemetry data to the collector using the `otel-collector ClusterIP Service` on port `4317`.
-
-5. The collector receives the telemetry data and displays it as logs.
-
-
-## Telemetry data processing in OpenTelemetry Collector
-
-![Otel Pipeline](./assets/otel-pipeline.drawio.png)
-
-***figure 6: OpenTelemetry Collector Pipeline***
 
 
 ## Understanding the YAML configurations
