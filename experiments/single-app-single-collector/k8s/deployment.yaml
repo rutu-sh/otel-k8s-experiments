@@ -4,7 +4,7 @@ metadata:
   name: opentelemetry-collector
   labels:
     app: opentelemetry-collector
-  namespace: opentelemetry
+  namespace: opentelemetry-demo
 spec:
   replicas: 1
   selector:
@@ -52,7 +52,7 @@ metadata:
   name: single-app-single-collector
   labels:
     app: single-app-single-collector
-  namespace: opentelemetry
+  namespace: opentelemetry-demo
 spec:
   replicas: 1
   selector:

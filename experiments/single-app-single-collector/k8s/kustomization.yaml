@@ -6,7 +6,7 @@ generatorOptions:
 
 configMapGenerator:
   - name: otel-collector-config
-    namespace: opentelemetry
+    namespace: opentelemetry-demo
     options:
       labels:
         app: otel-collector
