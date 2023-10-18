@@ -10,6 +10,25 @@ Kubernetes is an already accepted solution for a variety of orchestration usecas
 Opentelemetry is aimed at providing a standard protocol and tools for observability. It defines the opentelemetry specification<sup>[[6]](#references)</sup> for instrumenting telemetry data. The benefit of having a standard specification for telemetry data is in using the data with other tools down the line. The instrumented data can then be integrated with tools like Jaeger<sup>[[7]](#references)</sup>, Zipkin<sup>[[8]](#references)</sup>, Prometheus<sup>[[9]](#references)</sup>, etc. or with some vendor-specific<sup>[[10]](#references)</sup> tools.
 
 
+## Experiments
+
+### 1. [Single Application Single Collector](./experiments/single-app-single-collector)
+
+This experiment demonstrates how to set up a single application with a single opentelemetry collector. The application is a simple FastAPI application that has been auto-instrumented using the `opentelemetry-instrument` command line tool. The collector is configured to receive telemetry data from the application and log the telemetry data. 
+
+![Single App Single Collector](./experiments/single-app-single-collector/docs/assets/high-level-architecture.drawio.png)
+
+
+## Applications
+
+Following applications are used in this repository. 
+
+### Auto Instrumented Applications
+
+#### Python
+
+1. [Simple FastAPI App](./common-applications/auto-instrumented/python/simple-fastapi-app) 
+
 ## References
 
 [1] [Opentelemetry](https://opentelemetry.io) 

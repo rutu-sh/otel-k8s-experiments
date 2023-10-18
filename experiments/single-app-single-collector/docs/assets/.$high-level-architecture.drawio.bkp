@@ -1,0 +1,41 @@
+<mxfile host="Electron" modified="2023-10-17T12:59:02.834Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="rnAgALJJ2L1bSeoGik2n" version="22.0.2" type="device">
+  <diagram name="Page-1" id="ZXR5-eL-hxK1p33iIBn2">
+    <mxGraphModel dx="2261" dy="843" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TIAMCGAYwyrp1Py1rRRc-1" target="TIAMCGAYwyrp1Py1rRRc-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-10" value="&lt;b&gt;traces,logs,metrics&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="TIAMCGAYwyrp1Py1rRRc-9">
+          <mxGeometry x="-0.2353" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-1" value="single-app-single-collector&lt;br&gt;API service" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="TIAMCGAYwyrp1Py1rRRc-2" target="TIAMCGAYwyrp1Py1rRRc-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-12" value="request" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" vertex="1" connectable="0" parent="TIAMCGAYwyrp1Py1rRRc-3">
+          <mxGeometry x="-0.2" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-2" value="user" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];verticalLabelPosition=bottom;align=center;verticalAlign=top;shape=mxgraph.kubernetes.icon;prIcon=user" vertex="1" parent="1">
+          <mxGeometry x="-190" y="366" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry y="200" width="630" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-8" value="opentelemetry-collector" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="414" y="310" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="TIAMCGAYwyrp1Py1rRRc-14" value="kubernetes cluster" style="image;sketch=0;aspect=fixed;html=1;points=[];align=left;fontSize=12;image=img/lib/mscae/Kubernetes.svg;labelPosition=right;verticalLabelPosition=middle;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry y="200" width="50" height="48" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

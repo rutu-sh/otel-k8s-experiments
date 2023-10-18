@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-10-18T08:58:49.222Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="7YnzHVnXjRw5oSfYeRUh" version="22.0.2" type="device">
+<mxfile host="Electron" modified="2023-10-17T17:53:30.149Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="r3TgM1R_72UTNvKVXfc0" version="22.0.2" type="device">
   <diagram name="Page-1" id="IBJag9J1RICV2g_FJvN3">
     <mxGraphModel dx="2261" dy="843" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -105,15 +105,6 @@
           <mxGeometry x="-0.7" y="-1" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="z4m6VEwwjLsiw6KAJ4Vn-37" value="&lt;h1&gt;logs&lt;/h1&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="-230" y="575" width="70" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="z4m6VEwwjLsiw6KAJ4Vn-38" value="&lt;h1&gt;metrics&lt;/h1&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="-250" y="400" width="90" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="z4m6VEwwjLsiw6KAJ4Vn-39" value="&lt;h1&gt;traces&lt;/h1&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="-240" y="225" width="80" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

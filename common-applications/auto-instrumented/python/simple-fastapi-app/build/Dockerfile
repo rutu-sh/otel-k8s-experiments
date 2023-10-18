@@ -1,5 +1,7 @@
 FROM python:3.9-slim
 
+ENV PYTHONPATH="/app/src:${PYTHONPATH}"
+
 WORKDIR /app
 
 COPY requirements.txt . 
