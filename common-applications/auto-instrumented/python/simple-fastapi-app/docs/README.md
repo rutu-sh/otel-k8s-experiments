@@ -1,4 +1,4 @@
-# otel-autoinstrumentation-fastapi-simple-app
+# Auto Instrumented FastAPI Application
 
 This is a simple FastAPI application that is instrumented with OpenTelemetry using the [OpenTelemetry Auto Instrumentation for Python](https://opentelemetry.io/docs/instrumentation/python/automatic/). It listens on the port 8000, and generates telemetry data for each request. 
 
