@@ -9,11 +9,11 @@ A full reference of the Opentelemetry environment variables can be found here: [
 
 `OTEL_SERVICE_NAME`: The name of the service generating the telemetry data. 
 
-`OTEL_LOGS_EXPORTER`: The logs exporter to use, In this case we're using the `console` exporter. If you have an opentelemetry collector set up, you can change this variable's value to `console,otlp` or just `otlp`. You will also have to set the `OTEL_EXPORTER_OTLP_ENDPOINT` variable to the endpoint of your opentelemetry collector.
+`OTEL_LOGS_EXPORTER`: The logs exporter to use, In this doc we're using the `console` exporter. If you have an opentelemetry collector set up, you can change this variable's value to `console,otlp` or just `otlp`. You will also have to set the `OTEL_EXPORTER_OTLP_ENDPOINT` variable to the endpoint of your opentelemetry collector.
 
-`OTEL_TRACES_EXPORTER`: The traces exporter to use, In this case we're using the `console` exporter. If you have an opentelemetry collector set up, you can change this variable's value to `console,otlp` or just `otlp`. You will also have to set the `OTEL_EXPORTER_OTLP_ENDPOINT` variable to the endpoint of your opentelemetry collector.
+`OTEL_TRACES_EXPORTER`: The traces exporter to use, In this doc we're using the `console` exporter. If you have an opentelemetry collector set up, you can change this variable's value to `console,otlp` or just `otlp`. You will also have to set the `OTEL_EXPORTER_OTLP_ENDPOINT` variable to the endpoint of your opentelemetry collector.
 
-`OTEL_METRICS_EXPORTER`: The metrics exporter to use, In this case we're using the `console` exporter. If you have an opentelemetry collector set up, you can change this variable's value to `console,otlp` or just `otlp`. You will also have to set the `OTEL_EXPORTER_OTLP_ENDPOINT` variable to the endpoint of your opentelemetry collector.
+`OTEL_METRICS_EXPORTER`: The metrics exporter to use, In this doc we're using the `console` exporter. If you have an opentelemetry collector set up, you can change this variable's value to `console,otlp` or just `otlp`. You will also have to set the `OTEL_EXPORTER_OTLP_ENDPOINT` variable to the endpoint of your opentelemetry collector.
 
 `OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED`: This variable enables auto-instrumentation for the `logging` module.
 
@@ -136,30 +136,6 @@ make run-app TAG=0.0.1
 make stop-app
 ```
 
-## Using docker-compose to run the application
-
-To run the application using docker-compose, define the following in your `docker-compose.yml` file:
-
-```yaml
-version: "3.8"
-services:
-  app:
-    image: rutush10/otel-autoinstrumentation-fastapi-simple-app:${TAG}
-    ports:
-      - "8000:8000"
-    environment:
-      - OTEL_SERVICE_NAME=otel-autoinstrumentation-fastapi-simple-app
-      - OTEL_LOGS_EXPORTER=console
-      - OTEL_TRACES_EXPORTER=console
-      - OTEL_METRICS_EXPORTER=console
-      - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
-```
-
-Then run the following command:
-
-```shell
-TAG=0.0.1 docker-compose up
-```
 
 ## Auto Instrumenting FastAPI Applications
 
