@@ -185,10 +185,6 @@ This yaml creates two services:
 This is a NodePort service which exposes the application to the host machine. This service will provide an interface to the user to interact with the application.
 
 
-The service is exposed on port `8000` and the target port, which specifies the port on the pod, is `8000`. The service is exposed on the host machine on port `30000`.
-
-This services uses the selector `app: single-app-single-collector` to select the pods to expose.
-
 ```yaml
 spec:
   type: NodePort
@@ -200,6 +196,14 @@ spec:
       targetPort: 8000
       nodePort: 30000
 ```
+
+`protocol: TCP`: Specifies that the protocol used for this port is `TCP`
+
+`port: 8000`: Specifies the port on which the service would be accessible within the cluster. Request to this port within the cluster would be forwarded to the pods that match the `selector`
+
+`targetPort: 8000`: Specifies the port on the pods to which the traffic will be forwarded. In this case, traffic received on port 8000 will be forwarded to port 8000 on the pods matching the selector.
+
+`nodePort: 30000`: Specifies the port on each node where the service will be accessible externally. Any traffic hitting this port on any of the cluster's nodes will be forwarded to port 8000 on the pods matching the selector.
 
 **2. otel-collector ClusterIP Service**
 
@@ -230,7 +234,7 @@ This yaml creates two deployments:
 
 This is used to deploy the application. It uses the `rutush10/otel-autoinstrumentation-fastapi-simple-app` image which defines a simple FastAPI application listening on port 8000. The application is auto-instrumented using the OpenTelemetry Python SDK, and emits traces, logs, and metrics. Based on the environment variables provided, it can export telemetry data to the console or to the collector.
 
-The deployment uses the selector `app: single-app-single-collector` to manage the replica set and pods. The replica set is configured to have only one replica.
+The deployment uses the selector `app: single-app-single-collector` to manage the replica set and pods. The replica set is configured to have only one replica of pods matching lables specified in `matchLabels`.
 
 ```yaml
   replicas: 1
@@ -271,7 +275,7 @@ The pod has only one container, which is the application container. The containe
             cpu: "0.5"
 ```
 
-With this deployment definition, the application container will be exposed to the service `single-app-single-collector NodePort Service` on port `8000` (because it has the label `app: single-app-single-collector`).
+With this deployment definition, the application container will be exposed via the pod to the service `single-app-single-collector NodePort Service` on port `8000` (because it has the label `app: single-app-single-collector`).
 
 
 **2. otel-collector Deployment**
