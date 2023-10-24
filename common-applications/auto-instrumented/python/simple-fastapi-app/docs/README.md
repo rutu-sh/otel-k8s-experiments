@@ -136,6 +136,12 @@ make run-app TAG=0.0.1
 make stop-app
 ```
 
+## Make Requests
+
+The [postman](./postman/) directory contains the postman collection and the environment for testing the application locally. You have to simply import the collection and environment in your postman and run the requests. 
+
+Examples are provided within the requests for reference.
+
 
 ## Auto Instrumenting FastAPI Applications
 

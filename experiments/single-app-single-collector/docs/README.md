@@ -2,7 +2,7 @@
 
 ![High Level Overview](./assets/high-level-architecture.drawio.png)
 
-This experiment demonstrates a simple setup with a single application and a single collector. The application is a simple stateful Python FastAPI application which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs. 
+This experiment demonstrates a simple setup with a single application and a single collector. The application is a [simple stateful Python FastAPI application](./../../../common-applications/auto-instrumented/python/simple-fastapi-app/) which is auto-instrumented. Based on the provided configuration, the application will send telemetry data (traces, metrics, and logs) to the collector. The collector will then display the telemetry data as logs. 
 
 
 ![k8s Dashboard](./assets/k8s-dashboard.png)
@@ -115,6 +115,12 @@ make deploy
 ```shell
 minikube service --namespace opentelemetry-demo single-app-single-collector --url
 ```
+
+### Make requests
+
+The postman collection under the [simple-fastapi-app](./../../../common-applications/auto-instrumented/python/simple-fastapi-app/docs/postman/) contains the postman collection for testing the application used in this experiment. Following the instructions in the [README](./../../../common-applications/auto-instrumented/python/simple-fastapi-app/docs/README.md#make-requests) to mock the API calls. 
+
+Don't forget to change the `endpoint` in the postman environment to the URL obtained in the previous step (example value: `http://192.168.49.2:30000`)
 
 ### Check Collector Logs
 
