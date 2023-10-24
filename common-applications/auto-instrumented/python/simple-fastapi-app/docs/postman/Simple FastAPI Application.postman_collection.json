@@ -1,0 +1,689 @@
+{
+	"info": {
+		"_postman_id": "7d334c0a-0d00-42fe-98f9-5a9c28e7a4dc",
+		"name": "Simple FastAPI Application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19494543"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:42:51 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "43"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Application is up and running\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"item-1001\",\n    \"price\": 10.1001\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/rest/v1/item",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"rest",
+						"v1",
+						"item"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"item-1001\",\n    \"price\": 10.1001\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:45:00 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "49"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Item added successfully\",\n    \"item_id\": 0\n}"
+				},
+				{
+					"name": "Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"price\": 10.1001\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:46:04 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "152"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"detail\": [\n        {\n            \"type\": \"missing\",\n            \"loc\": [\n                \"body\",\n                \"name\"\n            ],\n            \"msg\": \"Field required\",\n            \"input\": {\n                \"price\": 10.1001\n            },\n            \"url\": \"https://errors.pydantic.dev/2.4/v/missing\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/rest/v1/item/:item-id",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"rest",
+						"v1",
+						"item",
+						":item-id"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "item-id",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item/:item-id",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item",
+								":item-id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "item-id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:49:52 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "36"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"item-1001\",\n    \"price\": 10.1001\n}"
+				},
+				{
+					"name": "NotFound",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item/:item-id",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item",
+								":item-id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "item-id",
+									"value": "10211"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:53:36 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "28"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Item not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"item-1001\",\n    \"price\": 20.0001\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/rest/v1/item/:item-id",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"rest",
+						"v1",
+						"item",
+						":item-id"
+					],
+					"variable": [
+						{
+							"key": "item-id",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"item-1001\",\n    \"price\": 20.0001\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item/:item-id",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item",
+								":item-id"
+							],
+							"variable": [
+								{
+									"key": "item-id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:55:29 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "39"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Item updated successfully\"\n}"
+				},
+				{
+					"name": "NotFound",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"item-1001\",\n    \"price\": 20.0001\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item/:item-id",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item",
+								":item-id"
+							],
+							"variable": [
+								{
+									"key": "item-id",
+									"value": "10211"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:56:05 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "28"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Item not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/rest/v1/item/:item-id",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"rest",
+						"v1",
+						"item",
+						":item-id"
+					],
+					"variable": [
+						{
+							"key": "item-id",
+							"value": "10211"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item/:item-id",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item",
+								":item-id"
+							],
+							"variable": [
+								{
+									"key": "item-id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:58:11 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "39"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Item deleted successfully\"\n}"
+				},
+				{
+					"name": "NotFound",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/item/:item-id",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"item",
+								":item-id"
+							],
+							"variable": [
+								{
+									"key": "item-id",
+									"value": "10211"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 16:58:33 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "28"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Item not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "List Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/rest/v1/items",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"rest",
+						"v1",
+						"items"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/rest/v1/items",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"items"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Tue, 24 Oct 2023 17:00:28 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "133"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"items\": {\n        \"0\": {\n            \"name\": \"item-1001\",\n            \"price\": 10.1001\n        },\n        \"1\": {\n            \"name\": \"item-1002\",\n            \"price\": 30.09142\n        },\n        \"2\": {\n            \"name\": \"item-2001\",\n            \"price\": 60.53\n        }\n    }\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "item-id",
+			"value": "item-id"
+		}
+	]
+}
