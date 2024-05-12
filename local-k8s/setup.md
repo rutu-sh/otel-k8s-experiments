@@ -10,9 +10,8 @@
 
 copy the join command and run this on the other node (just copy the command and add `--cri-socket=unix:///var/run/cri-dockerd.sock` to the end of the command)
 
-
-1. sudo kubeadm join <some-ip> --cri-socket=unix:///var/run/cri-dockerd.sock --token <token> --discovery-token-ca-cert-hash sha256:<hash>
-
+1. sudo swapoff -a # otherwise kubeadm won't work
+2. sudo kubeadm join <some-ip> --cri-socket=unix:///var/run/cri-dockerd.sock --token <token> --discovery-token-ca-cert-hash sha256:<hash>
 
 For adding a node 
 
