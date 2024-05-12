@@ -17,4 +17,6 @@ copy the join command and run this on the other node (just copy the command and 
 For adding a node 
 
 1. Follow the first set of steps till step 3
-2. Paste the join command mentioned above 
+2. Paste the join command mentioned above
+
+kubeadm join 10.0.0.116:6443 --token ffi19z.dlvrv12xncg1zb8o --discovery-token-ca-cert-hash sha256:1702cf5a6be0c167a2b21f501fd08a472e500fa114284fc05634fe3960f58320
