@@ -1,5 +1,7 @@
 # otel-k8s-experiments
 
+![created with https://socialify.git.ci/](./docs/assets/otel-k8s-experiments.svg)
+
 Examples for using Opentelmetry in a Kubernetes environment. 
 
 ## About
